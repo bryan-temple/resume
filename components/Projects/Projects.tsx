@@ -26,40 +26,40 @@ const projects: Project[] = [
   },
   {
     img: {
-      url: 'https://cdn.sanity.io/images/ruecft06/production/7d6e91f3e191d5dd1c5f8e1267696a324508bdee-1432x976.png',
+      url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
     },
     link: {
-      url: 'http://shortly-bice.vercel.app/',
-      github: 'https://github.com/sickerman/shortly',
+      url: 'https://medium.com/@obrayecom',
+      github: '',
     },
-    title: 'Shortly Link shortner app',
+    title: 'Medium Blog - Accessibility & Tech',
   },
   {
     img: {
-      url: 'https://cdn.sanity.io/images/ruecft06/production/ab617505a60f0ade72c9f7bf7f88c5111a9ec4ff-1497x976.png',
+      url: 'https://personalweb-mocha.vercel.app/static/media/Project-dashboard.baa3dcb1f90c35bd8d89.png',
     },
     link: {
-      url: 'https://covid-tracker-app-e755a.web.app/',
-      github: 'https://github.com/sickerman/covid-tracker-app',
+      url: 'https://dashboad-kohl.vercel.app/',
+      github: 'https://github.com/bryan-temple/dashboad',
     },
-    title: 'Covid-19 Tracker application',
+    title: 'Dashboard UI Application',
   },
   {
     img: {
-      url: 'https://cdn.sanity.io/images/ruecft06/production/8caf61c738179bfe27f3bab9d084c13e2f5cf95c-1432x976.png',
+      url: 'https://personalweb-mocha.vercel.app/static/media/project55.4abec7c3bb7cc6079808.png',
     },
     link: {
-      url: 'https://education.d22lzzd1dumb0v.amplifyapp.com/',
-      github: 'https://github.com/okalm-solutions/resume-builder',
+      url: 'https://weezkitchen.vercel.app/',
+      github: 'https://github.com/bryan-temple/weezkitchen',
     },
-    title: 'Resumefy - resume builder',
+    title: 'WeezKitchen website',
   },
   {
     img: {
       url: 'https://cdn.sanity.io/images/ruecft06/production/c505a86032cc0d6cba37f216b6827f6249dd3390-1316x977.png',
     },
     link: {
-      url: 'https://henryokev2.vercel.app/',
+      url: 'https://personalweb-mocha.vercel.app/',
       github: 'https://github.com/sickerman/Projectxyz',
     },
     title: 'Portfolio V2',
@@ -69,7 +69,7 @@ const projects: Project[] = [
 const Projects = () => {
   return (
     <div className='text-[#D0CFCF] mb-24'>
-      <Heading title={'Projects'} />
+      <Heading title={'Projects'} level="h2" />
       <div className='text-center grid gap-8 sm:grid-cols-2 md:grid-cols-2 w-full mx-auto justify-center'>
         {projects.map((prj, idx) => (
           <ProjectCard key={idx} project={prj} />

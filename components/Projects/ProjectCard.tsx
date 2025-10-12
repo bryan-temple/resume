@@ -14,7 +14,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <div className="bg-[#4F4F4F] rounded-md max-w-[550px]">
       <div className="rounded-t-md">
         <Image
-          className="rounded-t-md"
+          className="rounded-t-md w-full h-[350px] object-cover"
           src={img.url}
           alt={title}
           width={550}
@@ -32,14 +32,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <BiLink size={16} className="" />
             Visit site
           </a>
-          <a
-            className="cursor-pointer flex items-center gap-1 hover:text-blue-700 underline text-sm"
-            href={link.github}
-            target="_blank"
-          >
-            <BsGithub size={15} />
-            GitHub
-          </a>
+          {link.github && (
+            <a
+              className="cursor-pointer flex items-center gap-1 hover:text-blue-700 underline text-sm"
+              href={link.github}
+              target="_blank"
+            >
+              <BsGithub size={15} />
+              GitHub
+            </a>
+          )}
         </div>
       </div>
     </div>

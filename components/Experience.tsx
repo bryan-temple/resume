@@ -4,49 +4,61 @@ import { ExperienceCard, ExperienceCardProps } from "./ExperienceCard";
 
 const experiences: ExperienceCardProps[] = [
   {
-    company: "LabX Media Group",
-    role: "Front-end Developer",
-    startDate: "2021",
+    company: "Shopify Partner",
+    role: "Shopify Developer",
+    startDate: "2024",
     endDate: "PRESENT",
-    duties: `I've been working at an Online Media company for the last 2 years as a front-end web developer. Collaborating with science writers, we create performant websites using React, TypeScript, and Node. I also utilize my skills to build features for members and subscribers of different tiers, enhancing their user experience. Additionally, I contribute to an internal CMS, empowering editors to write and schedule articles.`,
+    duties:
+      "As a Shopify developer, I leveraged my expertise in HTML, CSS, JavaScript, AJAX, and Shopify's liquid templating language to build high-converting Shopify themes and apps for merchants across Lagos, Ogun State, Port Harcourt, Abuja, and Nigeria. I also provided ongoing maintenance, support, and training, empowering clients to utilize new platform features effectively.",
     skills: [
-      "React",
-      "Javascript",
-      "AWS S3",
-      "Typescript",
-      "Node",
-      "express",
-      "pug",
-      "jira",
+      "HTML/CSS",
+      "JavaScript", 
+      "Shopify",
+      "Liquid",
+      "AJAX",
     ],
   },
   {
-    company: "Shopify Partner",
-    role: "Shopify Developer ",
-    startDate: "2019",
-    endDate: "2022",
-    duties:
-      "As a Shopify developer, I leveraged my expertise in HTML, CSS, JavaScript, AJAX, and Shopify's liquid templating language to build high-converting Shopify themes and apps for merchants. I also provided ongoing maintenance, support, and training, empowering clients to utilize new platform features effectively.",
-    skills: ["HTML/CSS", "Javascript", "Liquid", "Ajax", "Shopify", "Node"],
+    company: "Lotus",
+    role: "Digital Accessibility and Experience Support",
+    startDate: "2022",
+    endDate: "PRESENT",
+    duties: `Currently working in digital accessibility and user experience support, where I gained my CPACC (Certified Professional in Accessibility Core Competencies) certification and am actively pursuing the WAS (Web Accessibility Specialist) certification. I focus on ensuring digital products meet accessibility standards and provide inclusive user experiences for all users.`,
+    skills: [
+      "Digital Accessibility",
+      "WCAG Compliance", 
+      "User Experience",
+      "Accessibility Testing",
+      "ARIA",
+    ],
   },
   {
-    company: "MTN",
-    role: "Web Developer (Contract)",
-    startDate: "2017",
-    endDate: "2019",
+    company: "Bryan and Beckley International",
+    role: "Pre-sale Engineer",
+    startDate: "2023",
+    endDate: "2024",
     duties:
-      "During my summer internship at MTN, I worked as a web developer, with a primary focus on building marketing pages for various campaigns and new offers. My main responsibility was to translate Figma designs into mobile-responsive and engaging websites using React. My role as a web developer at MTN allowed me to showcase my technical skills in React and CMS platforms, while also demonstrating my ability to translate designs into visually appealing and functional websites.",
-    skills: ["HTML/CSS", "Javascript", "Typescript", "Node", "express"],
+      "As a pre-sale engineer, I worked closely with sales teams to provide technical expertise during the sales process. I conducted product demonstrations, assessed client technical requirements, and provided solutions that aligned with customer needs. This role enhanced my ability to communicate complex technical concepts to diverse audiences.",
+    skills: ["Technical Sales", "Product Demos", "Client Consultation", "Solution Architecture", "Communication"],
+  },
+  {
+    company: "Jupiter Academy",
+    role: "Sales Representative",
+    startDate: "2022",
+    endDate: "2023",
+    duties:
+      "Worked as a sales representative, developing strong communication and relationship-building skills. I was responsible for client outreach, relationship management, and achieving sales targets. This experience strengthened my ability to understand customer needs and provide tailored solutions.",
+    skills: ["Sales", "Communication", "Customer Relations", "Client Outreach", "Target Achievement"],
   },
 ];
 
 function Experience() {
   return (
     <div className="text-[#D0CFCF] mb-24">
-      <h3 className="flex items-center text-xl font-semibold mb-12">
+      <h2 className="flex items-center text-xl font-semibold mb-12">
         <FaHashtag className="mr-4 text-[#4F4F4F]" size={18} />
         Experience
-      </h3>
+      </h2>
       {experiences.map((exp, idx) => (
         <ExperienceCard key={idx} {...exp} />
       ))}

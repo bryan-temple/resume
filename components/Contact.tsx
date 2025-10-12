@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
   };
   return (
     <div className="text-[#D0CFCF] mb-24">
-      <Heading title="Contact" />
+      <Heading title="Contact" level="h2" />
       <form
         className="flex flex-col gap-4 max-w-xl mx-auto "
         action=""

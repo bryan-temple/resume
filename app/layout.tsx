@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ['latin'] });
 import GoogleAnaltytics from './GoogleAnaltytics';
 
 export const metadata = {
-  title: 'Henry Oke - My personal site.',
-  description: 'Front-end Software Developer',
+  title: 'Bryan Temple - My personal site.',
+  description: 'Accessibility & User Experience | Frontend Developer | Quality Assurance Specialist',
 };
 
 export default function RootLayout({

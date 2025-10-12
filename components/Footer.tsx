@@ -7,7 +7,7 @@ const Footer = () => {
       <Heading title="" />
       <hr />
       <div className="flex justify-between mt-2">
-        <p>©2023 Oke Henry</p>
+        <p>©2025 Bryan Temple</p>
         <p className="flex gap-4">
           <a className="underline" href="/#">
             Github

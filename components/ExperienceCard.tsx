@@ -41,7 +41,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                 .map((skill, idx) => (
                   <span
                     key={idx}
-                    className="bg-[#4F4F4F] text-white rounded-md px-2 py-1"
+                    className="bg-[#4F4F4F] text-white rounded-md px-2 py-1 text-xs"
                   >
                     {skill}
                   </span>

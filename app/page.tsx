@@ -1,4 +1,4 @@
-import About from '@/components/About';
+// import About from '@/components/About';
 import Experience from '@/components/Experience';
 import Hero from '@/components/Hero';
 import Projects from '@/components/Projects/Projects';
@@ -8,15 +8,17 @@ import { Toaster } from '@/components/ui/toaster';
 
 export default async function HomePage() {
   return (
-    <main className='px-7 lg:max-w-4xl items-center mx-auto'>
+    <main className='px-7 lg:max-w-4xl items-center mx-auto grid-overlay'>
+      <div className='content-traced'>
       <Hero />
-      {/* @ts-expect-error Async Server Component */}
-      <About />
+      {/* About section temporarily hidden */}
+      {/* <About /> */}
       <Experience />
       <Projects />
       <Contact />
       <Footer />
       <Toaster />
+      </div>
     </main>
   );
 }
