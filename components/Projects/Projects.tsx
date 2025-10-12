@@ -54,16 +54,16 @@ const projects: Project[] = [
     },
     title: 'WeezKitchen website',
   },
-  {
-    img: {
-      url: 'https://cdn.sanity.io/images/ruecft06/production/c505a86032cc0d6cba37f216b6827f6249dd3390-1316x977.png',
-    },
-    link: {
-      url: 'https://personalweb-mocha.vercel.app/',
-      github: 'https://github.com/sickerman/Projectxyz',
-    },
-    title: 'Portfolio V2',
-  },
+  // {
+  //   img: {
+  //     url: 'https://cdn.sanity.io/images/ruecft06/production/c505a86032cc0d6cba37f216b6827f6249dd3390-1316x977.png',
+  //   },
+  //   link: {
+  //     url: 'https://personalweb-mocha.vercel.app/',
+  //     github: 'https://github.com/sickerman/Projectxyz',
+  //   },
+  //   title: 'Portfolio V2',
+  // },
 ];
 
 const Projects = () => {

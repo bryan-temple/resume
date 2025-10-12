@@ -5,10 +5,10 @@ export default function Hero() {
   return (
     <div className='mt-32 mb-24'>
       <h1 className='text-[29px] md:text-[46px] font-bold mb-2'>
-        Hello, I'm Bryan Temple 👋🏾
+        Hello, I&apos;m Bryan Temple 👋🏾
       </h1>
-      <p className='mb-8 text-[#D0CFCF] font-light max-w-sm'>
-        {` I'm a${' '}`}
+      <p className='mb-8 text-[#D0CFCF] font-light max-w-sm text-[20px]'>
+        {` I&apos;m a${' '}`}
         <span className='font-bold text-white'>
           Accessibility & User Experience | Frontend Developer | Quality Assurance Specialist
         </span>{' '}

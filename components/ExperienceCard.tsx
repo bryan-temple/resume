@@ -29,10 +29,10 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
         <h3 className="mb-4 font-semibold text-[#4F4F4F]">
           {role ?? "Example job title"}
         </h3>
-        <p className="font-light text-[#D0CFCF] leading-7">
+        <p className="font-light text-[#D0CFCF] leading-7 text-[18px]">
           {duties ?? "Example duties"}
         </p>
-        <div className="flex justify-between mt-8 gap-4">
+        <div className="flex justify-even mt-8 gap-4">
           <h3>Skills:</h3>
           <div className="flex gap-4 flex-wrap">
             {skills &&
