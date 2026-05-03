@@ -18,7 +18,7 @@ export async function fireSignal(mode: 'broadcast' | 'sequential'): Promise<void
   if (signalRunning) return;
   signalRunning = true;
 
-  const allSignals = [...document.querySelectorAll('[data-signal]')];
+  const allSignals = Array.from(document.querySelectorAll('[data-signal]'));
   allSignals.sort((a, b) => Number(a.getAttribute('data-signal')) - Number(b.getAttribute('data-signal')));
 
   if (mode === 'broadcast') {
