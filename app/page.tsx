@@ -116,7 +116,7 @@ export default function HomePage() {
         <div className="mobile-drawer__panel">
           <div className="sidebar__logo" style={{ marginBottom: 32 }}>
             <div className="sidebar__logo-mark" aria-hidden="true">
-              <Image src="/Braye Logo (White).png" alt="" width={38} height={38} style={{ objectFit: 'contain' }} />
+              <Image src="/Braye1020.png" alt="" width={38} height={38} style={{ objectFit: 'contain' }} unoptimized />
             </div>
             <div className="sidebar__logo-name">Bryan Temple</div>
             <div className="sidebar__logo-role">Accessibility Specialist</div>

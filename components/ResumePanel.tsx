@@ -33,6 +33,7 @@ export default function ResumePanel() {
                 width={56}
                 height={56}
                 style={{ objectFit: 'cover', borderRadius: '50%' }}
+                unoptimized
               />
             </div>
             <div>

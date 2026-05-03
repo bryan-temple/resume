@@ -73,11 +73,12 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       <a className="sidebar__logo" href="/" aria-label="Bryan Temple — Home">
         <div className="sidebar__logo-mark" aria-hidden="true">
           <Image
-            src="/Braye Logo (White).png"
+            src="/Braye1020.png"
             alt=""
             width={38}
             height={38}
             style={{ objectFit: 'contain' }}
+            unoptimized
           />
         </div>
         <div className="sidebar__logo-name">Bryan Temple</div>

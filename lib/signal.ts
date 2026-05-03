@@ -1,5 +1,3 @@
-'use client';
-
 let signalRunning = false;
 
 function pulse(el: Element, delay = 0): Promise<void> {
