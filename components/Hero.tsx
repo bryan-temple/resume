@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Hero() {
@@ -11,7 +12,6 @@ export default function Hero() {
     if (!canvas) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     let animId: number;
     let renderer: import('three').WebGLRenderer;
 
@@ -36,63 +36,36 @@ export default function Hero() {
       resize();
       window.addEventListener('resize', resize);
 
-      // Reduced segments (32 vs 48) — faster parse, still smooth
-      const coreMat = new THREE.MeshBasicMaterial({ color: 0x1c2820 });
-      const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.88, 32, 32), coreMat);
-      scene.add(coreSphere);
-
-      // Glow ring
-      const glowMat = new THREE.MeshBasicMaterial({
-        color: 0xc96442, transparent: true, opacity: 0.08, side: THREE.BackSide,
+      // Invisible core — gives the shells something to orbit around
+      const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x141210, transparent: true, opacity: 0.0,
       });
-      scene.add(new THREE.Mesh(new THREE.SphereGeometry(0.92, 24, 24), glowMat));
-
-      // Load photo via canvas to fix indexed-PNG + downscale to 512px for fast GPU upload
-      const img = new Image();
-      img.onload = () => {
-        const SIZE = 512;
-        const offscreen = document.createElement('canvas');
-        offscreen.width = SIZE;
-        offscreen.height = SIZE;
-        const ctx = offscreen.getContext('2d');
-        if (!ctx) return;
-        // Centre-crop the portrait image into a square
-        const scale = Math.max(SIZE / img.naturalWidth, SIZE / img.naturalHeight);
-        const sw = img.naturalWidth * scale;
-        const sh = img.naturalHeight * scale;
-        ctx.drawImage(img, (SIZE - sw) / 2, (SIZE - sh) / 2, sw, sh);
-
-        const texture = new THREE.CanvasTexture(offscreen);
-        texture.minFilter = THREE.LinearFilter;
-        coreMat.map = texture;
-        coreMat.color.set(0xffffff);
-        coreMat.needsUpdate = true;
-      };
-      img.src = '/bryantemple.png';
+      const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.88, 16, 16), coreMat);
+      scene.add(coreSphere);
 
       // Inner shell — sage octahedron
       const midMat = new THREE.MeshBasicMaterial({
-        color: 0x3a7a6a, wireframe: true, transparent: true, opacity: 0.2,
+        color: 0x3a7a6a, wireframe: true, transparent: true, opacity: 0.25,
       });
-      const mid = new THREE.Mesh(new THREE.OctahedronGeometry(1.3, 0), midMat);
+      const mid = new THREE.Mesh(new THREE.OctahedronGeometry(1.35, 0), midMat);
       scene.add(mid);
 
       // Outer shell — terracotta icosahedron
       const outerMat = new THREE.MeshBasicMaterial({
-        color: 0xc96442, wireframe: true, transparent: true, opacity: 0.3,
+        color: 0xc96442, wireframe: true, transparent: true, opacity: 0.35,
       });
-      const outer = new THREE.Mesh(new THREE.IcosahedronGeometry(1.9, 1), outerMat);
+      const outer = new THREE.Mesh(new THREE.IcosahedronGeometry(2.0, 1), outerMat);
       scene.add(outer);
 
-      // Particles — reduced to 80 for faster init
+      // Particles
       const ptGeo = new THREE.BufferGeometry();
-      const ptCount = 80;
+      const ptCount = 90;
       const pos = new Float32Array(ptCount * 3);
       for (let i = 0; i < ptCount * 3; i++) pos[i] = (Math.random() - 0.5) * 14;
       ptGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
       const pts = new THREE.Points(
         ptGeo,
-        new THREE.PointsMaterial({ color: 0xc96442, size: 0.035, transparent: true, opacity: 0.4 }),
+        new THREE.PointsMaterial({ color: 0xc96442, size: 0.04, transparent: true, opacity: 0.45 }),
       );
       scene.add(pts);
 
@@ -107,15 +80,12 @@ export default function Hero() {
       let t = 0;
       function animate() {
         animId = requestAnimationFrame(animate);
-        t += reduced ? 0 : 0.0035;
-
-        coreSphere.rotation.y = t * 0.2;
+        t += reduced ? 0 : 0.004;
         outer.rotation.x = t * 0.4 + my * 0.06;
         outer.rotation.y = t * 0.55 + mx * 0.06;
         mid.rotation.x = -t * 0.35;
         mid.rotation.y = -t * 0.5;
         pts.rotation.y = t * 0.07;
-
         renderer.render(scene, camera);
       }
       animate();
@@ -129,7 +99,21 @@ export default function Hero() {
 
   return (
     <section className="hero" aria-labelledby="hero-heading">
+
+      {/* Three.js wireframe shells — decorative, no photo texture */}
       <canvas ref={canvasRef} id="hero-canvas" aria-hidden="true" />
+
+      {/* Photo rendered as a plain HTML circle — crisp, no distortion */}
+      <div className="hero__photo" aria-hidden="true">
+        <Image
+          src="/bryantemple.png"
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center top' }}
+          unoptimized
+          priority
+        />
+      </div>
 
       <div className="hero__content">
         <p className="hero__eyebrow">

@@ -10,6 +10,7 @@ import CaseStudies from '@/components/CaseStudies';
 import Writing from '@/components/Writing';
 import ContactCTA from '@/components/ContactCTA';
 import Footer from '@/components/Footer';
+import SkillsSection from '@/components/SkillsSection';
 import DesignPanel from '@/components/DesignPanel';
 import VideoPanel from '@/components/VideoPanel';
 import TheHuman from '@/components/TheHuman';
@@ -178,6 +179,7 @@ export default function HomePage() {
         >
           <Hero />
           <CaseStudies />
+          <SkillsSection />
           <Writing />
           <ContactCTA />
           <Footer />
