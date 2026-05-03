@@ -20,7 +20,7 @@
   --on-dark:      rgba(250,246,239,0.92);
   --on-dark-dim:  rgba(250,246,239,0.45);
   --focus:        #3898ec;
-  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-body:    'Inclusive Sans', sans-serif;
   --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-xl: 32px;
 }
@@ -179,9 +179,9 @@ img { max-width: 100%; display: block; }
 }
 .hero__h1 {
   font-family: var(--font-display);
-  font-size: clamp(44px, 5.5vw, 80px);
-  font-weight: 600; line-height: 0.95;
-  letter-spacing: -3px; color: var(--ink); margin-bottom: 28px;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 700; line-height: 1.0;
+  letter-spacing: -1.5px; color: var(--ink); margin-bottom: 28px;
 }
 .hero__h1 em { font-style: normal; color: var(--brand); }
 .hero__sub {
@@ -276,8 +276,8 @@ img { max-width: 100%; display: block; }
 .section--dark .eyebrow { color: var(--on-dark-dim); }
 .heading {
   font-family: var(--font-display);
-  font-size: clamp(30px, 3.5vw, 50px); font-weight: 600;
-  letter-spacing: -1.8px; line-height: 1.0; color: var(--ink); margin-bottom: 48px;
+  font-size: clamp(28px, 3.2vw, 46px); font-weight: 700;
+  letter-spacing: -0.8px; line-height: 1.1; color: var(--ink); margin-bottom: 48px;
 }
 .section--dark .heading { color: var(--on-dark); }
 

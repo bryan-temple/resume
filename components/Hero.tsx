@@ -36,30 +36,39 @@ export default function Hero() {
       resize();
       window.addEventListener('resize', resize);
 
-      // Core sphere — photo mapped onto it
+      // Reduced segments (32 vs 48) — faster parse, still smooth
       const coreMat = new THREE.MeshBasicMaterial({ color: 0x1c2820 });
-      const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.88, 48, 48), coreMat);
+      const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.88, 32, 32), coreMat);
       scene.add(coreSphere);
 
-      // Subtle glow ring
+      // Glow ring
       const glowMat = new THREE.MeshBasicMaterial({
         color: 0xc96442, transparent: true, opacity: 0.08, side: THREE.BackSide,
       });
-      scene.add(new THREE.Mesh(new THREE.SphereGeometry(0.92, 32, 32), glowMat));
+      scene.add(new THREE.Mesh(new THREE.SphereGeometry(0.92, 24, 24), glowMat));
 
-      // Load photo texture
-      const loader = new THREE.TextureLoader();
-      loader.load(
-        '/bryantemple.png',
-        (tex) => {
-          tex.minFilter = THREE.LinearFilter;
-          coreMat.map = tex;
-          coreMat.color.set(0xffffff);
-          coreMat.needsUpdate = true;
-        },
-        undefined,
-        () => {}, // silent fail — dark fallback stays
-      );
+      // Load photo via canvas to fix indexed-PNG + downscale to 512px for fast GPU upload
+      const img = new Image();
+      img.onload = () => {
+        const SIZE = 512;
+        const offscreen = document.createElement('canvas');
+        offscreen.width = SIZE;
+        offscreen.height = SIZE;
+        const ctx = offscreen.getContext('2d');
+        if (!ctx) return;
+        // Centre-crop the portrait image into a square
+        const scale = Math.max(SIZE / img.naturalWidth, SIZE / img.naturalHeight);
+        const sw = img.naturalWidth * scale;
+        const sh = img.naturalHeight * scale;
+        ctx.drawImage(img, (SIZE - sw) / 2, (SIZE - sh) / 2, sw, sh);
+
+        const texture = new THREE.CanvasTexture(offscreen);
+        texture.minFilter = THREE.LinearFilter;
+        coreMat.map = texture;
+        coreMat.color.set(0xffffff);
+        coreMat.needsUpdate = true;
+      };
+      img.src = '/bryantemple.png';
 
       // Inner shell — sage octahedron
       const midMat = new THREE.MeshBasicMaterial({
@@ -75,9 +84,9 @@ export default function Hero() {
       const outer = new THREE.Mesh(new THREE.IcosahedronGeometry(1.9, 1), outerMat);
       scene.add(outer);
 
-      // Particles
+      // Particles — reduced to 80 for faster init
       const ptGeo = new THREE.BufferGeometry();
-      const ptCount = 140;
+      const ptCount = 80;
       const pos = new Float32Array(ptCount * 3);
       for (let i = 0; i < ptCount * 3; i++) pos[i] = (Math.random() - 0.5) * 14;
       ptGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -110,8 +119,6 @@ export default function Hero() {
         renderer.render(scene, camera);
       }
       animate();
-
-      // Return cleanup inside async IIFE — tracked via outer vars
     })();
 
     return () => {
