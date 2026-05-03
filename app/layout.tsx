@@ -1,26 +1,31 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-const inter = Inter({ subsets: ['latin'] });
 import GoogleAnaltytics from './GoogleAnaltytics';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Bryan Temple - My personal site.',
-  description: 'Accessibility & User Experience | Frontend Developer | Quality Assurance Specialist',
+export const metadata: Metadata = {
+  title: 'Bryan Temple — Accessibility Specialist & Frontend Developer',
+  description:
+    'CPACC certified Accessibility Specialist and Frontend Developer. WCAG 2.2 AA. Accessible Shopify. Building the web for everyone.',
+  icons: { icon: '/favicon.ico' },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang='en'
-      className='bg-white text-black dark:bg-[#111010] dark:text-white'
-    >
-      <body className={inter.className}>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inclusive+Sans:ital@0;1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        <a className="skip-link" href="#main">
+          Skip to main content
+        </a>
         {children}
         <SpeedInsights />
         <Analytics />
