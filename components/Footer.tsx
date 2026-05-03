@@ -1,24 +1,17 @@
-import React from "react";
-import Heading from "./Heading";
+'use client';
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <div className="text-[#D0CFCF] mb-24">
-      <Heading title="" />
-      <hr />
-      <div className="flex justify-between mt-2">
-        <p>©2025 Bryan Temple</p>
-        <p className="flex gap-4">
-          <a className="underline" href="/#">
-            Github
-          </a>
-          <a className="underline" href="#">
-            LinkedIn
-          </a>
-        </p>
-      </div>
-    </div>
+    <footer className="site-footer" aria-label="Site footer">
+      <p className="footer-copy">
+        &copy; 2026 Bryan Temple · Bihub Technology
+      </p>
+      <nav className="footer-nav" aria-label="Footer navigation">
+        <a href="#work">Work</a>
+        <a href="#writing">Writing</a>
+        <a href="#human">The Human</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </footer>
   );
-};
-
-export default Footer;
+}
