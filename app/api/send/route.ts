@@ -3,15 +3,13 @@ import createTransporter from "../../../lib/mailer";
 
 export async function POST(request: NextRequest) {
   const formData = await request.json();
-  const { email, message } = formData;
+  const { name, email, message } = formData;
   const mailOptions = {
-    from: email,
+    from: `"${name}" <${email}>`,
     to: "bryanonyen@gmail.com",
-    subject: "New Contact Form Submission",
-    text: `
-    Email: ${email}
-    Message: ${message}
-  `,
+    replyTo: email,
+    subject: `Portfolio enquiry from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
   };
   try {
     const data = await createTransporter.sendMail(mailOptions);
