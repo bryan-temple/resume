@@ -158,7 +158,7 @@ export default function HomePage() {
               <span className="status-dot" aria-hidden="true" />
               Available for work
             </div>
-            <a className="sidebar__cta" href="mailto:hello@bihub.tech">
+            <a className="sidebar__cta" href="https://www.linkedin.com/in/bryan-temple/" target="_blank" rel="noopener noreferrer">
               Let&apos;s talk
             </a>
           </div>

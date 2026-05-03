@@ -149,7 +149,7 @@ export default function Hero() {
           <Link className="btn btn--dark" href="#work">
             See my work
           </Link>
-          <Link className="btn btn--ghost" href="mailto:hello@bihub.tech">
+          <Link className="btn btn--ghost" href="#contact">
             Let&apos;s talk
           </Link>
         </div>

@@ -99,8 +99,10 @@ export default function ResumePanel() {
           </a>
           <a
             className="btn btn--ghost"
-            href="mailto:hello@bihub.tech"
-            aria-label="Email Bryan Temple"
+            href="https://www.linkedin.com/in/bryan-temple/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Connect with Bryan Temple on LinkedIn"
           >
             Get in touch
           </a>

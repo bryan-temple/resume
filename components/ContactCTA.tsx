@@ -13,7 +13,7 @@ export default function ContactCTA() {
           Ready to make<br />your store accessible?
         </h2>
         <p>CPACC certified. WCAG 2.2 AA. Built for every user from line one.</p>
-        <a className="btn btn--light" href="mailto:hello@bihub.tech">
+        <a className="btn btn--light" href="https://www.linkedin.com/in/bryan-temple/" target="_blank" rel="noopener noreferrer">
           Let&apos;s talk
         </a>
       </div>
