@@ -67,7 +67,7 @@
   --hairline:     #dedad0;
   --ink:          #1c1a16;
   --body:         #3e3c36;
-  --muted:        #7c7a72;
+  --muted:        #666360;
   --brand:        #c96442;
   --brand-hover:  #b3522e;
   --brand-glow:   rgba(201,100,66,0.4);
@@ -75,7 +75,7 @@
   --sage-light:   #deeee9;
   --dark:         #141210;
   --on-dark:      rgba(250,246,239,0.92);
-  --on-dark-dim:  rgba(250,246,239,0.45);
+  --on-dark-dim:  rgba(250,246,239,0.65);
   --focus:        #3898ec;
   --font-display: 'Space Grotesk', sans-serif;
   --font-body:    'Inclusive Sans', sans-serif;
@@ -779,7 +779,7 @@ img { max-width: 100%; display: block; }
 }
 .marquee-item {
   font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: rgba(255,255,255,0.4); white-space: nowrap;
+  color: rgba(255,255,255,0.75); white-space: nowrap;
   padding: 0 32px; display: flex; align-items: center; gap: 12px;
 }
 .marquee-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--brand); flex-shrink: 0; }
