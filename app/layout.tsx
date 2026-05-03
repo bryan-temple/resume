@@ -6,10 +6,10 @@ import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Bryan Temple — Accessibility Specialist & Frontend Developer',
+  title: 'Bryan Temple – Accessibility Specialist & Frontend Developer',
   description:
-    'CPACC certified Accessibility Specialist and Frontend Developer. WCAG 2.2 AA. Accessible Shopify. Building the web for everyone.',
-  icons: { icon: '/Braylogo.ico' },
+    'CPACC certified Accessibility Specialist and Frontend Developer. WCAG 2.2 AA. Accessible Shopify. Building for the locked out.',
+  icons: { icon: '/Braylogo.ico', shortcut: '/Braylogo.ico', apple: '/Braylogo.ico' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

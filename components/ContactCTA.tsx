@@ -47,19 +47,19 @@ export default function ContactCTA() {
         <div className="contact-intro">
           <p className="eyebrow">Contact</p>
           <h2 className="heading" id="contact-heading" style={{ marginBottom: 20 }}>
-            Ready to make your store accessible?
+            Your store is excluding people.<br />Let&apos;s fix that.
           </h2>
           <p className="contact-sub">
-            CPACC certified. WCAG 2.2 AA. I work with Shopify brands and product
-            teams who want to build for the 1 in 5 people with a disability — disability-first
-            from line one.
+            If your site doesn&apos;t work with a screen reader, a keyboard, or a switch
+            device – those users don&apos;t email you. They just leave. I fix that, for good.
+            CPACC certified. WCAG 2.2 AA. Disability-first from line one.
           </p>
           <ul className="contact-chips" aria-label="Service highlights">
             {[
               'WCAG audit included',
               'Shopify specialist',
-              'Quick turnaround',
               'CPACC certified',
+              'Quick turnaround',
             ].map((chip) => (
               <li key={chip} className="contact-chip">{chip}</li>
             ))}

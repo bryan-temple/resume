@@ -6,7 +6,7 @@ const credentials = [
   'Accessible Shopify',
   'TIME Magazine Client',
   'Built in Nigeria',
-  'For the World',
+  'For the Locked Out',
 ];
 
 export default function Marquee() {

@@ -14,16 +14,16 @@ interface CaseCard {
 const regularCases: CaseCard[] = [
   {
     label: 'Next.js · Claude Code · Vercel',
-    title: 'NestQuest — AI-Assisted Build',
-    desc: 'Live real estate demo built from prompt to deployment. Published on YouTube for beginners.',
-    metric: 'Live → bihub-homes.vercel.app',
+    title: 'NestQuest – AI-Assisted Build',
+    desc: 'Live real estate demo built from prompt to deployment in hours. Published on YouTube as a beginner resource.',
+    metric: 'Live – bihub-homes.vercel.app',
     signal: '3',
   },
   {
     label: 'Shopify · Accessible Theme',
-    title: 'Equa — WCAG-Ready Shopify Theme',
-    desc: 'A Shopify theme built accessible from line one. Every component keyboard operable and WCAG 2.2 AA verified.',
-    metric: 'Coming soon · Bihub Technology',
+    title: 'Equa – WCAG-Ready Shopify Theme',
+    desc: 'A Shopify theme built accessible from line one. Every component keyboard-operable and WCAG 2.2 AA verified.',
+    metric: 'Coming soon – Bihub Technology',
     signal: '4',
   },
 ];
@@ -78,7 +78,7 @@ export default function CaseStudies() {
       data-signal="1"
     >
       <p className="eyebrow">Selected Work</p>
-      <h2 className="heading" id="work-heading">Proof, not promises.</h2>
+      <h2 className="heading" id="work-heading">Results. Not pitch decks.</h2>
 
       <div className="cases">
         {/* Featured card: Lotus */}
@@ -92,11 +92,11 @@ export default function CaseStudies() {
           <div>
             <span className="case-label">Shopify · WCAG 2.2 AA · Assistive Tech</span>
             <h3 className="case-title" style={{ marginTop: 14 }}>
-              Lotus Inc. —<br />Accessibility Engineering
+              Lotus Inc.<br />Accessibility Engineering
             </h3>
             <p className="case-desc" style={{ marginTop: 10 }}>
               Accessible Shopify components for a TIME Magazine Best Invention company.
-              Video gallery, tooltips, hero sections — keyboard and screen reader operable across 30+ locales.
+              Video gallery, tooltips, hero sections – keyboard and screen reader operable across 30+ locales.
             </p>
             <p className="case-metric">
               100% PDF/UA · 163 tags · 335 alt descriptions · 0 failures

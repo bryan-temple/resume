@@ -121,12 +121,13 @@ export default function Hero() {
         </p>
 
         <h1 className="hero__h1" id="hero-heading">
-          Building<br />the web for<br /><em>everyone.</em>
+          Building<br />for the<br /><em>1 in 5.</em>
         </h1>
 
         <p className="hero__sub">
-          I help Shopify brands and product teams build stores that work for the 1 in 5
-          people with a disability. CPACC certified. WCAG 2.2 AA. Disability-first from line one.
+          Not &quot;accessibility as a checkbox.&quot; For the person who opens your store,
+          hits a wall, and closes it without saying a word. CPACC certified. WCAG 2.2 AA.
+          Disability-first from line one.
         </p>
 
         <div className="hero__actions">
@@ -142,7 +143,7 @@ export default function Hero() {
           {[
             'CPACC Certified',
             'TIME Magazine Client',
-            '0 failures · PDF/UA',
+            '0 failures – PDF/UA',
             'Playbook Co-Author',
           ].map((label) => (
             <div key={label} className="chip" role="listitem">

@@ -12,25 +12,25 @@ interface Post {
 const posts: Post[] = [
   {
     platform: 'Training · Coming Soon',
-    title: 'Accessibility Training',
+    title: 'Accessibility Training for Teams',
     href: '#',
     signal: '6',
-    ariaLabel: 'Accessibility Training — coming soon',
+    ariaLabel: 'Accessibility Training for Teams – coming soon',
     comingSoon: true,
   },
   {
-    platform: 'Business · Medium',
-    title: "Why Accessibility Is the Best Business Decision You're Not Making",
+    platform: 'Opinion · Medium',
+    title: "You Are Losing 15% of Customers and Calling It Normal",
     href: '#',
     signal: '7',
-    ariaLabel: 'Read: Why Accessibility Is Good Business',
+    ariaLabel: 'Read: The real cost of ignoring accessibility',
   },
   {
     platform: 'AI Dev · Medium',
-    title: 'How I Built a Live Site in Hours Using Claude Code',
+    title: 'I Built a Live Site in Hours with Claude Code. Here Is What Happened.',
     href: '#',
     signal: '8',
-    ariaLabel: 'Read: AI-Assisted Development',
+    ariaLabel: 'Read: AI-assisted development with Claude Code',
   },
 ];
 
@@ -43,7 +43,7 @@ export default function Writing() {
       data-signal="5"
     >
       <p className="eyebrow">Writing & Training</p>
-      <h2 className="heading" id="writing-heading">Ideas worth sharing.</h2>
+      <h2 className="heading" id="writing-heading">No fluff. Just truth.</h2>
 
       <div className="writing-grid">
         {posts.map((post) => (
