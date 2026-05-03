@@ -6,9 +6,35 @@ import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://bryanonyen.vercel.app'),
   title: 'Bryan Temple – Accessibility Specialist & Frontend Developer',
   description:
-    'CPACC certified Accessibility Specialist and Frontend Developer. WCAG 2.2 AA. Accessible Shopify. Building for the locked out.',
+    'CPACC certified Accessibility Specialist and Frontend Developer. WCAG 2.2 AA. Accessible Shopify themes and components. Based in Nigeria, working globally. Building for the 1 in 5.',
+  keywords: [
+    'accessibility specialist',
+    'WCAG 2.2',
+    'CPACC certified',
+    'Shopify accessibility',
+    'frontend developer',
+    'screen reader',
+    'inclusive design',
+    'axe DevTools',
+    'PDF/UA',
+    'ARIA',
+  ],
+  authors: [{ name: 'Bryan Temple Onyenghan' }],
+  openGraph: {
+    title: 'Bryan Temple – Accessibility Specialist & Frontend Developer',
+    description:
+      'CPACC certified. WCAG 2.2 AA. Accessible Shopify themes. Building for the 1 in 5 people your site currently locks out.',
+    type: 'website',
+    locale: 'en_GB',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Bryan Temple – Accessibility Specialist',
+    description: 'CPACC certified. WCAG 2.2 AA. Accessible Shopify builds.',
+  },
   icons: { icon: '/Braylogo.ico', shortcut: '/Braylogo.ico', apple: '/Braylogo.ico' },
 };
 
