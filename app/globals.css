@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── KEYFRAMES ─────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── HERO ENTRY STAGGER ─────────────────────────────────────────────── */
+.hero__eyebrow { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
+.hero__h1      { animation: fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
+.hero__sub     { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) 0.32s both; }
+.hero__actions { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) 0.46s both; }
+.hero__proof   { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) 0.60s both; }
+#hero-canvas   { animation: fadeIn 1.4s ease 0.1s both; }
+.hero__photo   { animation: fadeIn 0.85s ease 0.3s both; }
+
+/* ─── SIDEBAR ENTRY ──────────────────────────────────────────────────── */
+.sidebar { animation: slideInLeft 0.45s cubic-bezier(0.16,1,0.3,1) 0s both; }
+
+/* ─── SCROLL REVEAL ──────────────────────────────────────────────────── */
+[data-reveal="true"] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
+              transform  0.65s cubic-bezier(0.16,1,0.3,1);
+}
+[data-reveal="true"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── REDUCED MOTION OVERRIDE ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero__eyebrow,
+  .hero__h1,
+  .hero__sub,
+  .hero__actions,
+  .hero__proof,
+  #hero-canvas,
+  .hero__photo,
+  .sidebar { animation: none !important; }
+
+  [data-reveal="true"],
+  [data-reveal="true"].is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 :root {
   --sidebar-w:    240px;
   --canvas:       #faf6ef;
@@ -286,9 +343,9 @@ img { max-width: 100%; display: block; }
 .section--dark { background: var(--dark); }
 .eyebrow {
   font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 14px;
+  color: var(--brand); margin-bottom: 14px;
 }
-.section--dark .eyebrow { color: var(--on-dark-dim); }
+.section--dark .eyebrow { color: var(--brand); }
 .heading {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.2vw, 46px); font-weight: 700;
@@ -345,6 +402,8 @@ img { max-width: 100%; display: block; }
   padding: 28px 20px 20px;
   position: relative;
   user-select: none;
+  overflow: hidden;
+  min-width: 0;
 }
 .journey-label {
   font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase;
@@ -791,6 +850,7 @@ img { max-width: 100%; display: block; }
   .section { padding: 60px 28px; }
   .cases, .video-grid { grid-template-columns: 1fr; }
   .case--featured { grid-template-columns: 1fr; }
+  .a11y-journey { display: none; }
   .design-grid { grid-template-columns: 1fr 1fr; }
   .human-grid, .resume-wrap { grid-template-columns: 1fr; }
   .traits { grid-template-columns: 1fr; }

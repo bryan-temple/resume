@@ -133,7 +133,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           <span className="status-dot" aria-hidden="true" />
           Available for work
         </div>
-        <a className="sidebar__cta" href="https://www.linkedin.com/in/bryan-temple/" target="_blank" rel="noopener noreferrer">
+        <a className="sidebar__cta" href="https://www.linkedin.com/in/bryanonyenghan" target="_blank" rel="noopener noreferrer">
           Let&apos;s talk
         </a>
       </div>

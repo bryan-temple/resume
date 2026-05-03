@@ -99,7 +99,7 @@ export default function ResumePanel() {
           </a>
           <a
             className="btn btn--ghost"
-            href="https://www.linkedin.com/in/bryan-temple/"
+            href="https://www.linkedin.com/in/bryanonyenghan"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Connect with Bryan Temple on LinkedIn"

@@ -90,7 +90,7 @@ export default function ContactCTA() {
             {state === 'error' && (
               <p className="contact-status__error" role="alert">
                 Something went wrong. Please try again or reach out on{' '}
-                <a href="https://www.linkedin.com/in/bryan-temple/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/bryanonyenghan" target="_blank" rel="noopener noreferrer">
                   LinkedIn
                 </a>.
               </p>

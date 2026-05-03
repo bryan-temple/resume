@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Sidebar, { type TabId } from '@/components/Sidebar';
 import Marquee from '@/components/Marquee';
@@ -81,6 +81,49 @@ export default function HomePage() {
     window.scrollTo(0, 0);
   };
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [drawerOpen]);
+
+  // Scroll-reveal: re-run whenever the active panel changes
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    const panel = document.getElementById(`panel-${activeTab}`);
+    if (!panel) return;
+
+    const targets = Array.from(panel.querySelectorAll<HTMLElement>('.section, .signal-bar, .marquee-wrapper'));
+
+    // Reset so switching tabs re-animates the incoming panel
+    targets.forEach((el) => {
+      el.classList.remove('is-visible');
+      el.setAttribute('data-reveal', 'true');
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.06, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    // Small delay so the panel's display:block has taken effect
+    const id = setTimeout(() => targets.forEach((el) => observer.observe(el)), 60);
+
+    return () => {
+      clearTimeout(id);
+      observer.disconnect();
+    };
+  }, [activeTab]);
+
   return (
     <>
       <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
@@ -159,7 +202,7 @@ export default function HomePage() {
               <span className="status-dot" aria-hidden="true" />
               Available for work
             </div>
-            <a className="sidebar__cta" href="https://www.linkedin.com/in/bryan-temple/" target="_blank" rel="noopener noreferrer">
+            <a className="sidebar__cta" href="https://www.linkedin.com/in/bryanonyenghan" target="_blank" rel="noopener noreferrer">
               Let&apos;s talk
             </a>
           </div>

@@ -14,14 +14,14 @@ interface CaseCard {
 const regularCases: CaseCard[] = [
   {
     label: 'Next.js · Claude Code · Vercel',
-    title: 'NestQuest – AI-Assisted Build',
+    title: 'NestQuest: AI-Assisted Build',
     desc: 'Live real estate demo built from prompt to deployment in hours. Published on YouTube as a beginner resource.',
     metric: 'Live – bihub-homes.vercel.app',
     signal: '3',
   },
   {
     label: 'Shopify · Accessible Theme',
-    title: 'Equa – WCAG-Ready Shopify Theme',
+    title: 'Equa: WCAG-Ready Shopify Theme',
     desc: 'A Shopify theme built accessible from line one. Every component keyboard-operable and WCAG 2.2 AA verified.',
     metric: 'Coming soon – Bihub Technology',
     signal: '4',

@@ -48,7 +48,7 @@ export default function SkillsSection() {
       </div>
 
       <a
-        href="https://www.upwork.com/freelancers/~bryantemple"
+        href="https://www.upwork.com/freelancers/bryant46?mp_source=share"
         className="skills-upwork"
         target="_blank"
         rel="noopener noreferrer"
