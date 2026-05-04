@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bryan Temple — Accessible Shopify Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Inclusive+Sans:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-w:   240px;
+      --canvas:      #faf6ef;
+      --surface:     #f2ede2;
+      --surface-card:#e9e4d8;
+      --hairline:    #dedad0;
+      --ink:         #1c1a16;
+      --body:        #3e3c36;
+      --muted:       #7c7a72;
+      --brand:       #c96442;
+      --brand-glow:  rgba(201,100,66,0.4);
+      --brand-hover: #b3522e;
+      --sage:        #3a7a6a;
+      --sage-light:  #deeee9;
+      --dark:        #141210;
+      --on-dark:     rgba(250,246,239,0.92);
+      --on-dark-dim: rgba(250,246,239,0.45);
+      --focus:       #3898ec;
+      --font-d:      'Bricolage Grotesque', sans-serif;
+      --font-b:      'Inclusive Sans', sans-serif;
+      --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-xl: 32px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      background: var(--canvas);
+      color: var(--body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+
+    /* SKIP LINK */
+    .skip-link {
+      position: fixed; top: -120px; left: 16px;
+      background: var(--brand); color: #fff;
+      padding: 10px 18px; border-radius: 0 0 10px 10px;
+      font-size: 14px; z-index: 9999;
+      transition: top 0.2s; text-decoration: none;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ─── SIDEBAR ──────────────────────────────────────── */
+    .sidebar {
+      position: fixed; top: 0; left: 0;
+      width: var(--sidebar-w); height: 100vh;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      padding: 32px 28px;
+      z-index: 100;
+      border-right: 1px solid rgba(255,255,255,0.04);
+      overflow-y: auto;
+    }
+
+    .sidebar__logo {
+      text-decoration: none; display: block; margin-bottom: 40px;
+    }
+    .sidebar__logo-mark {
+      width: 38px; height: 38px; border-radius: 9px;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 14px; font-weight: 700;
+      color: var(--on-dark); margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    /* Swap with: <img src="/logo.svg" alt="Bihub Technology" width="38" height="38"> */
+    .sidebar__logo:hover .sidebar__logo-mark { border-color: var(--brand); }
+    .sidebar__logo-name {
+      font-family: var(--font-d); font-size: 14px; font-weight: 600;
+      color: var(--on-dark); letter-spacing: -0.2px;
+    }
+    .sidebar__logo-role { font-size: 11px; color: var(--on-dark-dim); margin-top: 2px; }
+
+    /* Tab nav section labels */
+    .sidebar__label {
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.2); margin: 20px 0 6px; padding: 0 4px;
+    }
+
+    .sidebar__nav ul { list-style: none; }
+    .sidebar__nav li { margin-bottom: 2px; }
+
+    .sidebar__nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: var(--r-sm);
+      font-size: 13px; color: var(--on-dark-dim);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+      position: relative; cursor: pointer;
+      border: none; background: transparent; width: 100%; text-align: left;
+    }
+    .sidebar__nav a:hover { color: var(--on-dark); background: rgba(255,255,255,0.05); }
+    .sidebar__nav a.active { color: var(--on-dark); background: rgba(255,255,255,0.07); }
+    .sidebar__nav a.active::before {
+      content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 18px; background: var(--brand); border-radius: 0 2px 2px 0;
+    }
+    .nav-icon { width: 15px; height: 15px; opacity: 0.45; flex-shrink: 0; }
+    .sidebar__nav a:hover .nav-icon, .sidebar__nav a.active .nav-icon { opacity: 1; }
+
+    .sidebar__bottom {
+      margin-top: auto; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar__status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--on-dark-dim); margin-bottom: 14px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(74,222,128,0.2);
+      animation: pulse-dot 2.5s ease infinite;
+    }
+    @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 2px rgba(74,222,128,0.2); } 50% { box-shadow: 0 0 0 5px rgba(74,222,128,0); } }
+    @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+
+    .sidebar__cta {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 40px; padding: 9px;
+      background: var(--brand); color: #faf6ef;
+      border-radius: var(--r-sm); font-family: var(--font-b);
+      font-size: 13px; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .sidebar__cta:hover { background: var(--brand-hover); }
+
+    /* ─── MAIN WRAP ────────────────────────────────────── */
+    .main-wrap { margin-left: var(--sidebar-w); min-height: 100vh; }
+
+    /* ─── CONTENT PANELS (tab switching) ───────────────── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden; padding: 80px 72px;
+    }
+    #hero-canvas {
+      position: absolute; top: 0; right: 0;
+      width: 60%; height: 100%; z-index: 0;
+    }
+    /* Journey styles for Lotus accessibility section */
+    .a11y-journey {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 28px 20px 20px;
+      position: relative;
+      user-select: none;
+    }
+    .journey-label {
+      font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase;
+      color: rgba(250,246,239,0.3); margin-bottom: 24px; text-align: center;
+    }
+    .journey-track {
+      position: relative;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 8px;
+    }
+    /* Connecting line behind nodes */
+    .journey-track::before {
+      content: '';
+      position: absolute; top: 50%; left: 8px; right: 8px;
+      height: 1px; background: rgba(255,255,255,0.1);
+      transform: translateY(-50%); z-index: 0;
+    }
+    /* Filled progress line */
+    .journey-progress-line {
+      position: absolute; top: 50%; left: 8px;
+      height: 2px; background: var(--brand);
+      transform: translateY(-50%); z-index: 1;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px var(--brand-glow);
+      width: 0%;
+    }
+
+    /* Node */
+    .journey-node {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      cursor: pointer;
+    }
+    .journey-node-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: var(--dark);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .journey-node.active .journey-node-dot {
+      border-color: var(--brand);
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(201,100,66,0.2), 0 0 16px var(--brand-glow);
+      transform: scale(1.3);
+    }
+    .journey-node.passed .journey-node-dot {
+      border-color: var(--brand); background: var(--brand); opacity: 0.6;
+    }
+    /* Traveling dot */
+    .journey-dot {
+      position: absolute; top: 50%; z-index: 3;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 12px var(--brand), 0 0 24px var(--brand-glow);
+      transform: translateY(-50%) translateX(-50%);
+      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      left: 8px;
+      pointer-events: none;
+    }
+    .journey-node-label {
+      font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase;
+      color: rgba(250,246,239,0.35); text-align: center; white-space: nowrap;
+      transition: color 0.3s;
+    }
+    .journey-node.active .journey-node-label { color: rgba(250,246,239,0.9); }
+    .journey-node.passed .journey-node-label { color: rgba(201,100,66,0.7); }
+
+    /* Tooltip shown for active node */
+    .journey-tooltip {
+      margin-top: 20px; min-height: 52px;
+      text-align: center;
+      transition: opacity 0.3s;
+    }
+    .journey-tooltip-title {
+      font-family: var(--font-d); font-size: 13px; font-weight: 600;
+      color: var(--on-dark); margin-bottom: 4px;
+    }
+    .journey-tooltip-desc {
+      font-size: 11px; color: var(--on-dark-dim); line-height: 1.5;
+    }
+    /* Pause/play button */
+    .journey-control {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin-top: 16px; padding: 6px 14px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px; cursor: pointer; font-size: 11px;
+      color: var(--on-dark-dim); transition: background 0.15s;
+      font-family: var(--font-b); width: fit-content; margin-inline: auto;
+    }
+    .journey-control:hover { background: rgba(255,255,255,0.1); }
+
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 62%; height: 100%;
+      background: linear-gradient(90deg, var(--canvas) 55%, transparent 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .hero__content { position: relative; z-index: 3; max-width: 520px; }
+
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--brand); margin-bottom: 24px;
+    }
+    .hero__eyebrow::before {
+      content: ''; width: 24px; height: 2px; background: var(--brand); flex-shrink: 0;
+    }
+    .hero__h1 {
+      font-family: var(--font-d);
+      font-size: clamp(44px, 5.5vw, 80px);
+      font-weight: 600; line-height: 0.95;
+      letter-spacing: -3px; color: var(--ink); margin-bottom: 28px;
+    }
+    .hero__h1 em { font-style: normal; color: var(--brand); }
+    .hero__sub {
+      font-size: 17px; line-height: 1.75; color: var(--body);
+      margin-bottom: 36px; max-width: 440px;
+    }
+    .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: var(--r-md);
+      font-family: var(--font-b); font-size: 15px;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.18s; border: none; min-height: 48px;
+    }
+    .btn--dark { background: var(--ink); color: var(--canvas); }
+    .btn--dark:hover { background: var(--brand); transform: translateY(-2px); box-shadow: 0 8px 24px var(--brand-glow); }
+    .btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--hairline); }
+    .btn--ghost:hover { border-color: var(--ink); }
+    .btn--brand { background: var(--brand); color: #faf6ef; }
+    .btn--brand:hover { background: var(--brand-hover); }
+    .btn--download {
+      background: var(--surface); color: var(--ink);
+      border: 1px solid var(--hairline); gap: 10px;
+    }
+    .btn--download:hover { border-color: var(--ink); background: var(--canvas); }
+
+    .hero__proof {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 44px; padding-top: 32px;
+      border-top: 1px solid var(--hairline);
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(250,246,239,0.7); backdrop-filter: blur(8px);
+      border: 1px solid var(--hairline); border-radius: 100px;
+      padding: 6px 14px; font-size: 12px; color: var(--body);
+    }
+    .chip__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); flex-shrink: 0; }
+
+    /* ─── ACCESSIBILITY SIGNAL SYSTEM ──────────────────── */
+    /*
+      Components tagged [data-signal] receive a traveling pulse.
+      Mode A — broadcast: all pulse at once
+      Mode B — sequential: pulse travels 0→1→2→...→end→...→0
+    */
+    [data-signal] {
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, outline 0.3s ease;
+    }
+    [data-signal].signal-active {
+      box-shadow: 0 0 0 2px var(--brand), 0 0 24px var(--brand-glow) !important;
+      border-color: var(--brand) !important;
+      outline: none;
+    }
+
+    /* Signal control bar */
+    .signal-bar {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 72px;
+    }
+    .signal-bar__label {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--on-dark-dim); flex-shrink: 0;
+    }
+    .signal-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 100px; border: none;
+      cursor: pointer; font-family: var(--font-b); font-size: 12px;
+      transition: all 0.15s; min-height: 32px;
+    }
+    .signal-btn--all {
+      background: rgba(201,100,66,0.15); color: #e8895e;
+      border: 1px solid rgba(201,100,66,0.3);
+    }
+    .signal-btn--all:hover { background: rgba(201,100,66,0.25); }
+    .signal-btn--seq {
+      background: rgba(58,122,106,0.15); color: #5ab09a;
+      border: 1px solid rgba(58,122,106,0.3);
+    }
+    .signal-btn--seq:hover { background: rgba(58,122,106,0.25); }
+    .signal-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .signal-btn--all .signal-dot { background: #e8895e; }
+    .signal-btn--seq .signal-dot { background: #5ab09a; }
+
+    /* ─── SECTION BASE ──────────────────────────────────── */
+    .section { padding: 80px 72px; border-top: 1px solid var(--hairline); }
+    .section--alt { background: var(--surface); }
+    .section--dark { background: var(--dark); }
+
+    .eyebrow {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px;
+    }
+    .section--dark .eyebrow { color: var(--on-dark-dim); }
+    .heading {
+      font-family: var(--font-d);
+      font-size: clamp(30px, 3.5vw, 50px); font-weight: 600;
+      letter-spacing: -1.8px; line-height: 1.0; color: var(--ink); margin-bottom: 48px;
+    }
+    .section--dark .heading { color: var(--on-dark); }
+
+    /* ─── CASE CARDS ────────────────────────────────────── */
+    .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .case {
+      border-radius: var(--r-lg); padding: 32px;
+      border: 1px solid var(--hairline); background: var(--surface);
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 14px;
+      transform-style: preserve-3d;
+      transition: transform 0.12s, box-shadow 0.12s;
+      cursor: pointer;
+    }
+    .case--featured {
+      grid-column: 1/-1; background: var(--dark);
+      border-color: rgba(255,255,255,0.06);
+      display: grid; grid-template-columns: 1fr 340px;
+      gap: 40px; align-items: center;
+    }
+    .case-label {
+      display: inline-flex; width: fit-content;
+      background: var(--surface-card); border: 1px solid var(--hairline);
+      border-radius: 100px; padding: 4px 12px;
+      font-size: 11px; color: var(--muted);
+    }
+    .case--featured .case-label {
+      background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1);
+      color: var(--on-dark-dim);
+    }
+    .case-title {
+      font-family: var(--font-d); font-size: 21px; font-weight: 600;
+      letter-spacing: -0.5px; line-height: 1.2; color: var(--ink);
+    }
+    .case--featured .case-title { font-size: 28px; letter-spacing: -1px; color: var(--on-dark); }
+    .case-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .case--featured .case-desc { color: var(--on-dark-dim); }
+    .case-metric {
+      margin-top: auto; font-size: 13px; color: var(--sage);
+      padding-top: 10px; border-top: 1px solid var(--hairline);
+    }
+    .case--featured .case-metric { color: #7ecab8; border-top-color: rgba(255,255,255,0.08); }
+    .case-orb {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r-lg); aspect-ratio: 4/3;
+    }
+    #case-canvas { width: 100%; height: 100%; display: block; border-radius: var(--r-lg); }
+
+    /* ─── DESIGN PANEL ──────────────────────────────────── */
+    .design-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .design-card {
+      border-radius: var(--r-lg); overflow: hidden;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .design-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(28,26,22,0.1);
+    }
+    .design-thumb {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--surface-card) 0%, var(--hairline) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 13px; color: var(--muted);
+      /* Swap with <img src="..." alt="Project screenshot"> when ready */
+    }
+    .design-thumb--sage   { background: linear-gradient(135deg, #deeee9 0%, #c0ddd7 100%); color: var(--sage); }
+    .design-thumb--brand  { background: linear-gradient(135deg, #f5e0d8 0%, #e8c4b4 100%); color: var(--brand-hover); }
+    .design-thumb--dark   { background: linear-gradient(135deg, #1c2820 0%, #0e1f1a 100%); color: rgba(255,255,255,0.3); }
+    .design-info { padding: 16px 20px; }
+    .design-title {
+      font-family: var(--font-d); font-size: 15px; font-weight: 600;
+      letter-spacing: -0.3px; color: var(--ink); margin-bottom: 4px;
+    }
+    .design-meta { font-size: 12px; color: var(--muted); }
+
+    /* ─── VIDEO PANEL ───────────────────────────────────── */
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .video-card {
+      border-radius: var(--r-lg); overflow: hidden;
+      border: 1px solid var(--hairline); background: var(--surface);
+      text-decoration: none; color: inherit;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .video-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(28,26,22,0.1); }
+    .video-thumb {
+      aspect-ratio: 16/9; background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      /* Swap with <video> or <img> screenshot when ready */
+    }
+    .video-thumb-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1c2820 0%, #0e1f1a 100%);
+    }
+    .video-thumb-grid {
+      position: absolute; inset: 0; opacity: 0.15;
+      background-image:
+        linear-gradient(rgba(201,100,66,0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,100,66,0.5) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .play-btn {
+      position: relative; z-index: 2;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(201,100,66,0.9); border: 2px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .video-card:hover .play-btn { transform: scale(1.1); box-shadow: 0 8px 24px var(--brand-glow); }
+    .play-btn svg { width: 20px; height: 20px; fill: white; margin-left: 3px; }
+    .video-info { padding: 18px 20px; }
+    .video-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .video-title {
+      font-family: var(--font-d); font-size: 16px; font-weight: 600;
+      letter-spacing: -0.3px; line-height: 1.3; color: var(--ink);
+    }
+
+    /* ─── RESUME PANEL ──────────────────────────────────── */
+    .resume-wrap { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
+    .resume-preview {
+      border: 1px solid var(--hairline); border-radius: var(--r-lg);
+      overflow: hidden; background: var(--surface);
+    }
+    .resume-header {
+      background: var(--dark); padding: 28px 32px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .resume-photo-circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(201,100,66,0.2);
+      border: 2px solid rgba(201,100,66,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--brand);
+      flex-shrink: 0;
+      /* Swap with: <img src="/Bryan.png" alt="Bryan Temple"> */
+    }
+    .resume-name { font-family: var(--font-d); font-size: 18px; font-weight: 600; color: var(--on-dark); }
+    .resume-role { font-size: 12px; color: var(--on-dark-dim); margin-top: 2px; }
+    .resume-body { padding: 28px 32px; }
+    .resume-section { margin-bottom: 20px; }
+    .resume-section-title {
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 10px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .resume-item { margin-bottom: 12px; }
+    .resume-item-title { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .resume-item-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .resume-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .resume-skill {
+      background: var(--surface-card); border: 1px solid var(--hairline);
+      border-radius: 100px; padding: 3px 10px; font-size: 11px; color: var(--body);
+    }
+
+    .resume-actions { display: flex; flex-direction: column; gap: 12px; }
+    .resume-actions h3 {
+      font-family: var(--font-d); font-size: 22px; font-weight: 600;
+      letter-spacing: -0.5px; color: var(--ink); margin-bottom: 8px;
+    }
+    .resume-actions p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+    /* ─── HUMAN / RADAR ─────────────────────────────────── */
+    .human-grid { display: grid; grid-template-columns: 1fr 380px; gap: 72px; align-items: start; }
+    .human-text p { font-size: 16px; line-height: 1.8; color: var(--body); margin-bottom: 14px; }
+    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+    .trait {
+      background: var(--canvas); border: 1px solid var(--hairline);
+      border-radius: var(--r-md); padding: 14px 16px;
+    }
+    .trait-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
+    .trait-track { height: 4px; background: var(--hairline); border-radius: 4px; overflow: hidden; }
+    .trait-bar {
+      height: 100%; background: var(--brand); border-radius: 4px; width: 0;
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .trait-bar.go { width: var(--w); }
+    @media (prefers-reduced-motion: reduce) { .trait-bar { transition: none; } .trait-bar.go { width: var(--w); } }
+    .radar-wrap { background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-xl); padding: 24px; }
+    .radar-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+
+    /* ─── WRITING ────────────────────────────────────────── */
+    .writing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .writing-card {
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: var(--r-lg); padding: 26px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.15s;
+      transform-style: preserve-3d;
+    }
+    .writing-card:hover { border-color: var(--ink); transform: perspective(700px) translateY(-4px) rotateX(2deg); box-shadow: 0 12px 36px rgba(28,26,22,0.09); }
+    .writing-platform { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+    .writing-title { font-family: var(--font-d); font-size: 17px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.3; color: var(--ink); margin-top: auto; }
+
+    /* ─── CTA ───────────────────────────────────────────── */
+    .cta-wrap { text-align: center; }
+    .cta-wrap h2 {
+      font-family: var(--font-d); font-size: clamp(36px,4.5vw,64px); font-weight: 600;
+      letter-spacing: -2.5px; line-height: 0.95; color: var(--on-dark); margin-bottom: 16px;
+    }
+    .cta-wrap p { font-size: 17px; color: var(--on-dark-dim); margin-bottom: 36px; }
+    .btn--light { background: var(--canvas); color: var(--ink); }
+    .btn--light:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .sidebar { display: none; }
+      .main-wrap { margin-left: 0; }
+      .hero { padding: 60px 28px; }
+      .hero::before { width: 100%; background: rgba(250,246,239,0.92); }
+      #hero-canvas { width: 100%; opacity: 0.2; }
+      .hero__photo-sphere { display: none; }
+      .signal-bar { padding: 10px 28px; flex-wrap: wrap; gap: 8px; }
+      .section { padding: 60px 28px; }
+      .cases, .video-grid { grid-template-columns: 1fr; }
+      .case--featured { grid-template-columns: 1fr; }
+      .case-orb { display: none; }
+      .design-grid { grid-template-columns: 1fr 1fr; }
+      .human-grid, .resume-wrap { grid-template-columns: 1fr; }
+      .traits { grid-template-columns: 1fr; }
+      .writing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ─── SIDEBAR ───────────────────────────────────────────── -->
+<aside class="sidebar" aria-label="Site navigation">
+
+  <a class="sidebar__logo" href="/" aria-label="Bryan Temple — Home">
+    <div class="sidebar__logo-mark" aria-hidden="true">BT</div>
+    <div class="sidebar__logo-name">Bryan Temple</div>
+    <div class="sidebar__logo-role">Accessibility Specialist</div>
+  </a>
+
+  <nav class="sidebar__nav" aria-label="Main">
+    <p class="sidebar__label">Portfolio</p>
+    <ul role="list">
+      <li>
+        <a href="#" data-tab="work" class="active" role="button" aria-current="page">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="5" height="5" rx="1"/><rect x="9" y="3" width="5" height="5" rx="1"/><rect x="2" y="10" width="5" height="5" rx="1"/><rect x="9" y="10" width="5" height="5" rx="1"/></svg>
+          Work
+        </a>
+      </li>
+      <li>
+        <a href="#" data-tab="design" role="button">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="10" rx="1.5"/><path d="M5 14.5h6M8 11.5v3"/></svg>
+          Design
+        </a>
+      </li>
+      <li>
+        <a href="#" data-tab="video" role="button">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="3.5" width="9" height="9" rx="1.5"/><path d="M10.5 6l4-2v8l-4-2"/></svg>
+          Video
+        </a>
+      </li>
+    </ul>
+
+    <p class="sidebar__label" style="margin-top:24px">About</p>
+    <ul role="list">
+      <li>
+        <a href="#" data-tab="human" role="button">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="5" r="2.5"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+          The Human
+        </a>
+      </li>
+      <li>
+        <a href="#" data-tab="resume" role="button">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M5.5 5h5M5.5 8h5M5.5 11h3"/></svg>
+          Resume / CV
+        </a>
+      </li>
+      <li>
+        <a href="#contact" data-tab="work" role="button">
+          <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M1.5 5.5l6.5 4 6.5-4"/></svg>
+          Contact
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar__bottom">
+    <div class="sidebar__status">
+      <span class="status-dot" aria-hidden="true"></span>
+      Available for work
+    </div>
+    <a class="sidebar__cta" href="mailto:hello@bihub.tech">Let's talk →</a>
+  </div>
+</aside>
+
+<!-- ─── MAIN ──────────────────────────────────────────────── -->
+<main class="main-wrap" id="main">
+
+  <!-- ACCESSIBILITY SIGNAL BAR -->
+  <div class="signal-bar" role="toolbar" aria-label="Accessibility signal controls">
+    <span class="signal-bar__label">♿ Signal</span>
+    <button class="signal-btn signal-btn--all" onclick="fireSignal('broadcast')" aria-label="Send accessibility signal to all components simultaneously">
+      <span class="signal-dot" aria-hidden="true"></span>
+      Broadcast all
+    </button>
+    <button class="signal-btn signal-btn--seq" onclick="fireSignal('sequential')" aria-label="Send accessibility signal sequentially through each component and back">
+      <span class="signal-dot" aria-hidden="true"></span>
+      Travel round-trip
+    </button>
+  </div>
+
+  <!-- ══ PANEL: WORK ══════════════════════════════════════ -->
+  <div class="panel active" id="panel-work" role="tabpanel" aria-label="Work panel">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">Accessibility Specialist · Frontend Developer</p>
+        <h1 class="hero__h1" id="hero-heading">
+          Building<br>the web for<br><em>everyone.</em>
+        </h1>
+        <p class="hero__sub">
+          I help Shopify brands and product teams build stores that work for the 1 in 5
+          people with a disability. CPACC certified. WCAG 2.2 AA. Disability-first from line one.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--dark" href="#work">See my work</a>
+          <a class="btn btn--ghost" href="mailto:hello@bihub.tech">Let's talk</a>
+        </div>
+        <div class="hero__proof" role="list" aria-label="Credentials">
+          <div class="chip" role="listitem"><span class="chip__dot" aria-hidden="true"></span>CPACC Certified</div>
+          <div class="chip" role="listitem"><span class="chip__dot" aria-hidden="true"></span>TIME Magazine Client</div>
+          <div class="chip" role="listitem"><span class="chip__dot" aria-hidden="true"></span>0 failures · PDF/UA</div>
+          <div class="chip" role="listitem"><span class="chip__dot" aria-hidden="true"></span>Playbook Co-Author</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="section" id="work" aria-labelledby="work-heading" data-signal="1">
+      <p class="eyebrow">Selected Work</p>
+      <h2 class="heading" id="work-heading">Proof, not promises.</h2>
+      <div class="cases">
+
+        <article class="case case--featured" tabindex="0" data-signal="2" aria-label="Lotus Inc. case study">
+          <div>
+            <span class="case-label">Shopify · WCAG 2.2 AA · Assistive Tech</span>
+            <h3 class="case-title" style="margin-top:14px">Lotus Inc. —<br>Accessibility Engineering</h3>
+            <p class="case-desc" style="margin-top:10px">
+              Accessible Shopify components for a TIME Magazine Best Invention company.
+              Video gallery, tooltips, hero sections — keyboard and screen reader operable across 30+ locales.
+            </p>
+            <p class="case-metric">100% PDF/UA · 163 tags · 335 alt descriptions · 0 failures</p>
+          </div>
+          <!-- Interactive Accessibility Journey -->
+          <div class="a11y-journey" aria-label="Accessibility workflow journey for Lotus">
+            <p class="journey-label">Accessibility workflow</p>
+            <div class="journey-track" id="journeyTrack" role="list" aria-label="Journey stages">
+              <div class="journey-progress-line" id="journeyLine"></div>
+              <div class="journey-dot" id="journeyDot" aria-hidden="true"></div>
+              <!-- Nodes injected by JS -->
+            </div>
+            <div class="journey-tooltip" id="journeyTooltip" aria-live="polite">
+              <p class="journey-tooltip-title" id="journeyTitle"></p>
+              <p class="journey-tooltip-desc" id="journeyDesc"></p>
+            </div>
+            <button class="journey-control" id="journeyControl" aria-label="Pause journey animation">
+              ⏸ Pause
+            </button>
+          </div>
+        </article>
+
+        <article class="case" tabindex="0" data-signal="3" aria-label="NestQuest case study">
+          <span class="case-label">Next.js · Claude Code · Vercel</span>
+          <h3 class="case-title">NestQuest — AI-Assisted Build</h3>
+          <p class="case-desc">Live real estate demo built from prompt to deployment. Published on YouTube for beginners.</p>
+          <p class="case-metric">Live → bihub-homes.vercel.app</p>
+        </article>
+
+        <article class="case" tabindex="0" data-signal="4" aria-label="Equa Shopify theme">
+          <span class="case-label">Shopify · Accessible Theme</span>
+          <h3 class="case-title">Equa — WCAG-Ready Shopify Theme</h3>
+          <p class="case-desc">A Shopify theme built accessible from line one. Every component keyboard operable and WCAG 2.2 AA verified.</p>
+          <p class="case-metric">Coming soon · Bihub Technology</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- WRITING -->
+    <section class="section section--alt" id="writing" aria-labelledby="writing-heading" data-signal="5">
+      <p class="eyebrow">Writing</p>
+      <h2 class="heading" id="writing-heading">Ideas worth sharing.</h2>
+      <div class="writing-grid">
+        <a class="writing-card" href="#" data-signal="6" aria-label="Read: The Lotus Accessibility Playbook">
+          <p class="writing-platform">Accessibility · Medium</p>
+          <h3 class="writing-title">The Lotus Accessibility Playbook — What We Built and Why</h3>
+        </a>
+        <a class="writing-card" href="#" data-signal="7" aria-label="Read: Why Accessibility Is Good Business">
+          <p class="writing-platform">Business · Medium</p>
+          <h3 class="writing-title">Why Accessibility Is the Best Business Decision You're Not Making</h3>
+        </a>
+        <a class="writing-card" href="#" data-signal="8" aria-label="Read: AI-Assisted Development">
+          <p class="writing-platform">AI Dev · Medium</p>
+          <h3 class="writing-title">How I Built a Live Site in Hours Using Claude Code</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section--dark" id="contact" aria-labelledby="cta-heading" data-signal="9">
+      <div class="cta-wrap">
+        <h2 id="cta-heading">Ready to make<br>your store accessible?</h2>
+        <p>CPACC certified. WCAG 2.2 AA. Built for every user from line one.</p>
+        <a class="btn btn--light" href="mailto:hello@bihub.tech">Let's talk →</a>
+      </div>
+    </section>
+
+  </div><!-- /panel-work -->
+
+  <!-- ══ PANEL: DESIGN ════════════════════════════════════ -->
+  <div class="panel" id="panel-design" role="tabpanel" aria-label="Design panel">
+    <section class="section" aria-labelledby="design-heading">
+      <p class="eyebrow">Design</p>
+      <h2 class="heading" id="design-heading">How I think visually.</h2>
+      <div class="design-grid">
+
+        <div class="design-card" data-signal="10">
+          <!--
+            SWAP design-thumb with:
+            <img src="/designs/lotus-shopify.png" alt="Lotus Shopify store screenshot">
+          -->
+          <div class="design-thumb design-thumb--sage">Lotus Store Components</div>
+          <div class="design-info">
+            <p class="design-title">Lotus — Accessible Shopify UI</p>
+            <p class="design-meta">Shopify Liquid · WCAG 2.2 AA</p>
+          </div>
+        </div>
+
+        <div class="design-card" data-signal="11">
+          <div class="design-thumb design-thumb--dark">NestQuest Real Estate</div>
+          <div class="design-info">
+            <p class="design-title">NestQuest — Property Search UI</p>
+            <p class="design-meta">Next.js · Tailwind · Accessible</p>
+          </div>
+        </div>
+
+        <div class="design-card" data-signal="12">
+          <div class="design-thumb design-thumb--brand">Equa Theme Preview</div>
+          <div class="design-info">
+            <p class="design-title">Equa — Shopify Theme Design</p>
+            <p class="design-meta">Figma · Shopify · WCAG</p>
+          </div>
+        </div>
+
+        <div class="design-card" data-signal="13">
+          <div class="design-thumb design-thumb--sage">Rheumatology Clinic</div>
+          <div class="design-info">
+            <p class="design-title">Healthcare Website — 36 Pages</p>
+            <p class="design-meta">WordPress · Elementor · WCAG 2.2</p>
+          </div>
+        </div>
+
+        <div class="design-card" data-signal="14">
+          <div class="design-thumb design-thumb--dark">Bihub Dashboard</div>
+          <div class="design-info">
+            <p class="design-title">Bihub Technology — Dashboard UI</p>
+            <p class="design-meta">React · Design System</p>
+          </div>
+        </div>
+
+        <div class="design-card" data-signal="15">
+          <div class="design-thumb design-thumb--brand">Add your design</div>
+          <div class="design-info">
+            <p class="design-title">Your Next Project</p>
+            <p class="design-meta">Coming soon</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div><!-- /panel-design -->
+
+  <!-- ══ PANEL: VIDEO ══════════════════════════════════════ -->
+  <div class="panel" id="panel-video" role="tabpanel" aria-label="Video panel">
+    <section class="section" aria-labelledby="video-heading">
+      <p class="eyebrow">Video</p>
+      <h2 class="heading" id="video-heading">Showing the work live.</h2>
+      <div class="video-grid">
+
+        <a class="video-card" href="https://youtu.be/GHIPfDb-08g" target="_blank" rel="noopener noreferrer"
+          data-signal="16" aria-label="Watch: How I Vibe-Coded a Live Website — opens YouTube">
+          <div class="video-thumb" aria-hidden="true">
+            <div class="video-thumb-bg"></div>
+            <div class="video-thumb-grid"></div>
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-label">YouTube · AI Development</p>
+            <p class="video-title">How I Vibe-Coded a Live Website as a Complete Beginner</p>
+          </div>
+        </a>
+
+        <div class="video-card" data-signal="17"
+          aria-label="Screen recording: Lotus Shopify store accessibility walkthrough — coming soon">
+          <div class="video-thumb" aria-hidden="true">
+            <div class="video-thumb-bg" style="background: linear-gradient(135deg,#1c2820,#0e1f1a)"></div>
+            <div class="video-thumb-grid"></div>
+            <div class="play-btn" style="background: rgba(58,122,106,0.8)">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-label">Screen Record · Accessibility</p>
+            <p class="video-title">Lotus Store — Accessibility Walkthrough</p>
+          </div>
+        </div>
+
+        <div class="video-card" data-signal="18" aria-label="Screen recording: WCAG audit live — coming soon">
+          <div class="video-thumb" aria-hidden="true">
+            <div class="video-thumb-bg" style="background: linear-gradient(135deg,#2a1a10,#1a0f08)"></div>
+            <div class="video-thumb-grid"></div>
+            <div class="play-btn" style="background: rgba(201,100,66,0.7)">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-label">Screen Record · WCAG Audit</p>
+            <p class="video-title">Live WCAG 2.2 Audit — axe DevTools + NVDA</p>
+          </div>
+        </div>
+
+        <div class="video-card" data-signal="19" aria-label="Screen recording: NestQuest build — coming soon">
+          <div class="video-thumb" aria-hidden="true">
+            <div class="video-thumb-bg" style="background: linear-gradient(135deg,#1a1a2e,#0f0f1a)"></div>
+            <div class="video-thumb-grid"></div>
+            <div class="play-btn" style="background: rgba(90,90,180,0.8)">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-label">Screen Record · Claude Code</p>
+            <p class="video-title">NestQuest — Full Claude Code Build</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div><!-- /panel-video -->
+
+  <!-- ══ PANEL: THE HUMAN ══════════════════════════════════ -->
+  <div class="panel" id="panel-human" role="tabpanel" aria-label="The Human panel">
+    <section class="section section--alt" id="human" aria-labelledby="human-heading">
+      <p class="eyebrow">The Human</p>
+      <h2 class="heading" id="human-heading">More than a set of skills.</h2>
+      <div class="human-grid">
+        <div class="human-text">
+          <p>
+            I completed a workplace behavioural assessment during a professional hiring process.
+            Instead of hiding the results — I'm sharing them.
+            Transparency is an accessibility value too.
+          </p>
+          <p>
+            Highly conscientious. Goal-driven when the target is clear. Patient under pressure.
+            Introverted — but building in public anyway. That tension is the work.
+          </p>
+          <div class="traits" role="list" aria-label="Workplace trait scores">
+            <div class="trait" role="listitem" data-signal="20">
+              <p class="trait-name">Conscientiousness</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:92%" role="meter" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" aria-label="92%"></div></div>
+            </div>
+            <div class="trait" role="listitem" data-signal="21">
+              <p class="trait-name">Motivation</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:82%" role="meter" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="82%"></div></div>
+            </div>
+            <div class="trait" role="listitem" data-signal="22">
+              <p class="trait-name">Patience</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:95%" role="meter" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="95%"></div></div>
+            </div>
+            <div class="trait" role="listitem" data-signal="23">
+              <p class="trait-name">Cooperativeness</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:88%" role="meter" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="88%"></div></div>
+            </div>
+            <div class="trait" role="listitem" data-signal="24">
+              <p class="trait-name">Achievement</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:78%" role="meter" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="78%"></div></div>
+            </div>
+            <div class="trait" role="listitem" data-signal="25">
+              <p class="trait-name">Openness</p>
+              <div class="trait-track"><div class="trait-bar" style="--w:70%" role="meter" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="70%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="radar-wrap" data-signal="26">
+          <canvas id="radarChart" role="img" aria-label="Radar chart of workplace personality traits compared to general population"></canvas>
+          <p class="radar-note">Workplace behavioural profile — professional hiring assessment.</p>
+        </div>
+      </div>
+    </section>
+  </div><!-- /panel-human -->
+
+  <!-- ══ PANEL: RESUME ════════════════════════════════════ -->
+  <div class="panel" id="panel-resume" role="tabpanel" aria-label="Resume and CV panel">
+    <section class="section" aria-labelledby="resume-heading">
+      <p class="eyebrow">Resume / CV</p>
+      <h2 class="heading" id="resume-heading">The full picture.</h2>
+      <div class="resume-wrap">
+
+        <!-- Preview -->
+        <div class="resume-preview" data-signal="27">
+          <div class="resume-header">
+            <div class="resume-photo-circle" aria-hidden="true">BT</div>
+            <!-- Swap with: <img src="/Bryan.png" alt="" aria-hidden="true"> -->
+            <div>
+              <p class="resume-name">Bryan Temple Onyenghan</p>
+              <p class="resume-role">Accessibility Specialist · Frontend Developer · CPACC</p>
+            </div>
+          </div>
+          <div class="resume-body">
+            <div class="resume-section">
+              <p class="resume-section-title">Experience</p>
+              <div class="resume-item">
+                <p class="resume-item-title">Accessibility Engineer — Lotus Inc.</p>
+                <p class="resume-item-sub">2023–Present · Remote · TIME Magazine Best Invention company</p>
+              </div>
+              <div class="resume-item">
+                <p class="resume-item-title">Frontend Developer — Bihub Technology</p>
+                <p class="resume-item-sub">2023–Present · Freelance · Accessibility-first builds</p>
+              </div>
+            </div>
+            <div class="resume-section">
+              <p class="resume-section-title">Certifications</p>
+              <div class="resume-item">
+                <p class="resume-item-title">CPACC — Certified Professional in Accessibility Core Competencies</p>
+                <p class="resume-item-sub">IAAP · International Association of Accessibility Professionals</p>
+              </div>
+            </div>
+            <div class="resume-section">
+              <p class="resume-section-title">Core Skills</p>
+              <div class="resume-skills">
+                <span class="resume-skill">WCAG 2.2 AA</span>
+                <span class="resume-skill">Shopify Liquid</span>
+                <span class="resume-skill">React / Next.js</span>
+                <span class="resume-skill">ARIA</span>
+                <span class="resume-skill">axe DevTools</span>
+                <span class="resume-skill">NVDA / VoiceOver</span>
+                <span class="resume-skill">PDF/UA</span>
+                <span class="resume-skill">Figma</span>
+                <span class="resume-skill">WordPress</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="resume-actions">
+          <h3>Download the full CV</h3>
+          <p>
+            The full resume includes case study metrics, certifications, and a complete
+            project history. Available as a PDF — ready to send.
+          </p>
+          <!--
+            DOWNLOAD: Update href to your actual CV file path
+            e.g. href="/Bryan-Temple-CV.pdf"
+          -->
+          <a class="btn btn--download" href="/Bryan-Temple-CV.pdf" download aria-label="Download Bryan Temple CV as PDF">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M8 2v8M5 7l3 3 3-3"/><rect x="2" y="11" width="12" height="3" rx="1"/>
+            </svg>
+            Download CV (PDF)
+          </a>
+          <a class="btn btn--ghost" href="mailto:hello@bihub.tech" aria-label="Email Bryan Temple">
+            Get in touch
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </div><!-- /panel-resume -->
+
+</main><!-- /main-wrap -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ─── TAB SWITCHING ──────────────────────────────────────────
+const tabLinks  = document.querySelectorAll('[data-tab]');
+const panels    = document.querySelectorAll('.panel');
+const navLinks  = document.querySelectorAll('.sidebar__nav a');
+
+tabLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const tab = link.dataset.tab;
+    if (!tab) return;
+
+    // Hide all panels
+    panels.forEach(p => p.classList.remove('active'));
+
+    // Show target
+    const target = document.getElementById('panel-' + tab);
+    if (target) target.classList.add('active');
+
+    // Update active nav state
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a === link);
+      a.removeAttribute('aria-current');
+    });
+    link.setAttribute('aria-current', 'page');
+
+    // Trigger bar animations in new panel
+    setTimeout(triggerBarsInView, 100);
+
+    // Init radar if human panel
+    if (tab === 'human' && !radarInit) initRadar();
+
+    window.scrollTo(0, 0);
+  });
+});
+
+// ─── HERO THREE.JS SCENE ─────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+  camera.position.z = 5;
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ── CORE: Photo sphere at the center of everything ──────────
+  // This sits INSIDE the wireframes as the nucleus
+  const coreMat = new THREE.MeshBasicMaterial({ color: 0x1c2820 }); // fallback until photo loads
+  const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.88, 48, 48), coreMat);
+  scene.add(coreSphere);
+
+  // Subtle glow ring around the core
+  const glowGeo = new THREE.SphereGeometry(0.92, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({ color: 0xc96442, transparent: true, opacity: 0.08, side: THREE.BackSide });
+  scene.add(new THREE.Mesh(glowGeo, glowMat));
+
+  // Load real photo as texture onto the core sphere
+  // SWAP '/Bryan.png' with your actual image path when ready
+  const loader = new THREE.TextureLoader();
+  loader.load('/Bryan.png',
+    (tex) => {
+      tex.minFilter = THREE.LinearFilter;
+      coreMat.map = tex;
+      coreMat.color.set(0xffffff); // let texture show full color
+      coreMat.needsUpdate = true;
+    },
+    undefined,
+    () => {} // silent fail — keeps the dark fallback color
+  );
+
+  // ── INNER shell — sage octahedron ──────────────────────────
+  const midGeo = new THREE.OctahedronGeometry(1.3, 0);
+  const midMat = new THREE.MeshBasicMaterial({ color: 0x3a7a6a, wireframe: true, transparent: true, opacity: 0.2 });
+  const mid = new THREE.Mesh(midGeo, midMat);
+  scene.add(mid);
+
+  // ── OUTER shell — terracotta icosahedron ────────────────────
+  const outerGeo = new THREE.IcosahedronGeometry(1.9, 1);
+  const outerMat = new THREE.MeshBasicMaterial({ color: 0xc96442, wireframe: true, transparent: true, opacity: 0.3 });
+  const outer = new THREE.Mesh(outerGeo, outerMat);
+  scene.add(outer);
+
+  // ── Particles ───────────────────────────────────────────────
+  const ptGeo = new THREE.BufferGeometry();
+  const ptCount = 140;
+  const pos = new Float32Array(ptCount * 3);
+  for (let i = 0; i < ptCount * 3; i++) pos[i] = (Math.random() - 0.5) * 14;
+  ptGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const ptMat = new THREE.PointsMaterial({ color: 0xc96442, size: 0.035, transparent: true, opacity: 0.4 });
+  const pts = new THREE.Points(ptGeo, ptMat);
+  scene.add(pts);
+
+  // Mouse parallax
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  let t = 0;
+  (function animate() {
+    requestAnimationFrame(animate);
+    t += reduced ? 0 : 0.0035;
+
+    // Core photo sphere rotates slowly — feels alive
+    coreSphere.rotation.y = t * 0.2;
+
+    // Shells counter-rotate for layered depth effect
+    outer.rotation.x = t * 0.4 + my * 0.06;
+    outer.rotation.y = t * 0.55 + mx * 0.06;
+    mid.rotation.x  = -t * 0.35;
+    mid.rotation.y  = -t * 0.5;
+
+    pts.rotation.y  = t * 0.07;
+
+    renderer.render(scene, camera);
+  })();
+})();
+
+// ─── CASE CARD ORBS ──────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('case-canvas');
+  if (!canvas) return;
+
+  const w = canvas.parentElement.clientWidth || 340;
+  const h = canvas.parentElement.clientHeight || 220;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.setSize(w, h);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+  camera.position.z = 4;
+
+  const geo = new THREE.TorusKnotGeometry(1, 0.3, 100, 14);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xc96442, wireframe: true, transparent: true, opacity: 0.45 });
+  const knot = new THREE.Mesh(geo, mat);
+  scene.add(knot);
+
+  let t = 0;
+  (function animate() {
+    requestAnimationFrame(animate);
+    t += reduced ? 0 : 0.007;
+    knot.rotation.x = t * 0.5;
+    knot.rotation.y = t * 0.9;
+    renderer.render(scene, camera);
+  })();
+})();
+
+// ─── 3D CARD TILT ────────────────────────────────────────────
+document.querySelectorAll('.case, .design-card, .writing-card').forEach(card => {
+  if (reduced) return;
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform     = `perspective(900px) rotateY(${x * 9}deg) rotateX(${-y * 7}deg) translateZ(10px)`;
+    card.style.boxShadow     = `${-x * 24}px ${y * 24}px 48px rgba(28,26,22,0.14)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.55s ease, box-shadow 0.55s ease';
+    card.style.transform  = '';
+    card.style.boxShadow  = '';
+    setTimeout(() => { card.style.transition = ''; }, 560);
+  });
+});
+
+// ─── ACCESSIBILITY SIGNAL SYSTEM ─────────────────────────────
+/*
+  Broadcast: all [data-signal] components pulse simultaneously
+  Sequential: signal travels 0→last→back to 0 (round trip)
+*/
+let signalRunning = false;
+
+function pulse(el, delay = 0) {
+  return new Promise(res => {
+    setTimeout(() => {
+      el.classList.add('signal-active');
+      setTimeout(() => { el.classList.remove('signal-active'); res(); }, 600);
+    }, delay);
+  });
+}
+
+async function fireSignal(mode) {
+  if (signalRunning) return;
+  signalRunning = true;
+
+  // Get all visible signal components in the active panel
+  const activePanel  = document.querySelector('.panel.active') || document;
+  const allSignals   = [...document.querySelectorAll('[data-signal]')];
+  // Sort by signal number
+  allSignals.sort((a, b) => +a.dataset.signal - +b.dataset.signal);
+
+  if (mode === 'broadcast') {
+    // All at once
+    allSignals.forEach(el => pulse(el, 0));
+    await new Promise(r => setTimeout(r, 800));
+
+  } else if (mode === 'sequential') {
+    const step = 180;
+    // Forward pass
+    for (let i = 0; i < allSignals.length; i++) {
+      pulse(allSignals[i]);
+      await new Promise(r => setTimeout(r, step));
+    }
+    // Pause at end
+    await new Promise(r => setTimeout(r, 300));
+    // Return pass
+    for (let i = allSignals.length - 2; i >= 0; i--) {
+      pulse(allSignals[i]);
+      await new Promise(r => setTimeout(r, step));
+    }
+    await new Promise(r => setTimeout(r, 700));
+  }
+
+  signalRunning = false;
+}
+
+// ─── ACCESSIBILITY JOURNEY — Lotus Section ───────────────────
+/*
+  A dot travels: ♿ Brief → Audit → Plan → Code → Test → Ship
+  Auto-plays. Click a node to jump to it. Pause/resume control.
+*/
+(function() {
+  const track    = document.getElementById('journeyTrack');
+  const dot      = document.getElementById('journeyDot');
+  const line     = document.getElementById('journeyLine');
+  const title    = document.getElementById('journeyTitle');
+  const desc     = document.getElementById('journeyDesc');
+  const ctrl     = document.getElementById('journeyControl');
+  if (!track) return;
+
+  const stages = [
+    { label: '♿ Brief',  title: 'Accessibility Brief',   desc: 'Understanding disability contexts, user needs, and WCAG targets before a single line of code.' },
+    { label: 'Audit',    title: 'Audit & Discovery',      desc: 'axe DevTools + WAVE + manual keyboard test. Every failure logged with severity and WCAG criterion.' },
+    { label: 'Plan',     title: 'Remediation Plan',       desc: 'Failures prioritized by impact. A11y debt mapped against sprint capacity. No guesswork.' },
+    { label: 'Code',     title: 'Implementation',         desc: 'Semantic HTML first. ARIA only where native elements fall short. BEM naming. Every change documented.' },
+    { label: 'Test',     title: 'Assistive Tech Testing', desc: 'NVDA + Chrome. VoiceOver + Safari. Keyboard-only walkthrough. Real screen reader, real user flow.' },
+    { label: 'Ship',     title: 'Deploy & Monitor',       desc: '30+ locales. Zero regressions. Accessibility is not a deliverable — it is a standard maintained.' },
+  ];
+
+  // Build nodes
+  const nodeEls = stages.map((s, i) => {
+    const node = document.createElement('div');
+    node.className = 'journey-node';
+    node.setAttribute('role', 'listitem');
+    node.setAttribute('aria-label', s.label);
+    node.setAttribute('tabindex', '0');
+    node.innerHTML = `
+      <div class="journey-node-dot"></div>
+      <span class="journey-node-label">${s.label}</span>
+    `;
+    node.addEventListener('click', () => jumpTo(i));
+    node.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); jumpTo(i); } });
+    track.appendChild(node);
+    return node;
+  });
+
+  let current  = 0;
+  let playing  = true;
+  let timer    = null;
+
+  function jumpTo(idx) {
+    current = idx;
+    render();
+  }
+
+  function render() {
+    // Update nodes
+    nodeEls.forEach((n, i) => {
+      n.classList.remove('active', 'passed');
+      if (i === current) n.classList.add('active');
+      else if (i < current) n.classList.add('passed');
+    });
+
+    // Position traveling dot
+    // Calculate positions after layout
+    requestAnimationFrame(() => {
+      const trackRect = track.getBoundingClientRect();
+      const activeRect = nodeEls[current].getBoundingClientRect();
+      const pct = ((activeRect.left + activeRect.width / 2) - trackRect.left) / trackRect.width * 100;
+
+      dot.style.left = pct + '%';
+      line.style.width = pct + '%';
+    });
+
+    // Update tooltip
+    title.textContent = stages[current].title;
+    desc.textContent  = stages[current].desc;
+  }
+
+  function advance() {
+    current = (current + 1) % stages.length;
+    render();
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(advance, 2600);
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+  }
+
+  // Pause / resume
+  ctrl.addEventListener('click', () => {
+    playing = !playing;
+    ctrl.textContent = playing ? '⏸ Pause' : '▶ Resume';
+    ctrl.setAttribute('aria-label', playing ? 'Pause journey animation' : 'Resume journey animation');
+    playing ? startTimer() : stopTimer();
+  });
+
+  // Init
+  render();
+  if (!reduced) startTimer();
+  else {
+    // Reduced motion: just show all nodes static
+    current = stages.length - 1;
+    render();
+    ctrl.style.display = 'none';
+  }
+})();
+let radarInit = false;
+
+function initRadar() {
+  radarInit = true;
+  const ctx = document.getElementById('radarChart');
+  if (!ctx) return;
+  new Chart(ctx.getContext('2d'), {
+    type: 'radar',
+    data: {
+      labels: ['Achievement','Motivation','Conscientiousness','Cooperativeness','Patience','Openness','Self-Confidence','Assertiveness'],
+      datasets: [
+        { label: 'Bryan', data: [78,82,92,88,95,70,62,38],
+          backgroundColor: 'rgba(201,100,66,0.12)', borderColor: '#c96442', borderWidth: 2,
+          pointBackgroundColor: '#c96442', pointBorderColor: '#faf6ef', pointBorderWidth: 2, pointRadius: 4 },
+        { label: 'General population', data: [60,60,60,60,60,60,60,60],
+          backgroundColor: 'transparent', borderColor: '#dedad0', borderWidth: 1.5,
+          borderDash: [4,4], pointRadius: 0 }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: { duration: reduced ? 0 : 900 },
+      plugins: {
+        legend: { labels: { font: { family: 'Inclusive Sans', size: 12 }, color: '#7c7a72', usePointStyle: true, padding: 16 } }
+      },
+      scales: {
+        r: {
+          min: 0, max: 100, ticks: { display: false },
+          grid: { color: '#dedad0' }, angleLines: { color: '#dedad0' },
+          pointLabels: { font: { family: 'Inclusive Sans', size: 11 }, color: '#3e3c36' }
+        }
+      }
+    }
+  });
+}
+
+// ─── TRAIT BAR ANIMATION ─────────────────────────────────────
+function triggerBarsInView() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('go'); obs.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.trait-bar:not(.go)').forEach(b => obs.observe(b));
+}
+triggerBarsInView();
+
+// ─── ACTIVE NAV ON SCROLL ─────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => secObs.observe(s));
+</script>
+</body>
+</html>
